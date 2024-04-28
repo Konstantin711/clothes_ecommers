@@ -3,6 +3,8 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.getBasicPage),
-    path('<str:slug>/all/', views.getAllByParent, name='get all by parent')
+    path('', views.getAllURIs, name='get all uri'),
+    path('<str:slug>/all/', views.getAllByParent, name='get all by parent'),
+    path('<str:p_slug>/<str:t_slug>/all/', views.getAllByType, name='get all by type'),
+    path('<str:slug>/', views.ItemBySlug.as_view(), name='get item'),
 ]

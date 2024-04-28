@@ -9,7 +9,7 @@ class ItemType(models.Model):
     slug = models.SlugField(max_length=64)
 
     def __str__(self) -> str:
-        return f"{self.title}"
+        return f"{self.title} - {self.slug}"
     
 
 
@@ -20,7 +20,7 @@ class ParentType(models.Model):
     slug = models.SlugField(max_length=64)
 
     def __str__(self) -> str:
-        return f"{self.title}"
+        return f"{self.title} - {self.slug}"
 
 
 class Item(models.Model):
@@ -33,4 +33,4 @@ class Item(models.Model):
     item_type = models.ManyToManyField(ItemType)
 
     def __str__(self) -> str:
-        return f"{self.title}"
+        return f"{self.title} - {self.slug}"

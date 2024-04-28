@@ -1,9 +1,11 @@
+from dataclasses import dataclass, fields, asdict
 from . import models
 from . import serializers
 
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.views import APIView
 from rest_framework.response import Response
-
+from rest_framework import status
 
 # pathes:
     # - men(all)
@@ -12,29 +14,121 @@ from rest_framework.response import Response
     # - woman(all)
     #   - woman/c_type(all in type)
     #   - woman/c_type/c_scug(choosen item)
+
+
+@dataclass
+class AllTypeSlugs:
+    shirts: str = 'shirt'
+    hudi: str = 'hudi'
+    pants: str = 'pants'
+    tshirts: str = 't-shirt'
     
 
+@dataclass
+class AllParentSlugs:
+    men: str = 'men'
+    women: str = 'women'
+
+
+
 @api_view()
-def getBasicPage(request):
-    return Response({'message': 'Initial view'})
+def getAllURIs(request):
+    pathes = {
+        'men/all/': 'Get all in men category',
+        'women/all/': 'Get all in women category',
+        'men/shirt/all': 'Get all in shirt category',
+        'women/shirt/all': 'Get all in shirt category',
+    }
+
+    return Response(pathes)
 
 
 @api_view()
 def getAllByParent(request, slug):
-    print(slug)
+    """
+    Get all elements by parent slug. URI Example: /api/men/all
+    """
     if slug not in ['men', 'women']:
-        return Response({'message': 'Resource not found'}, status=400)
+        return Response(
+            {'message': f"Resource not found. Please use: men or women"}, 
+            status=status.HTTP_404_NOT_FOUND
+            )
 
-    all_by_parent = models.Item.objects.prefetch_related('parent_type').prefetch_related('item_type').filter(parent_type__slug=str(slug))
-    print(all_by_parent)
+    all_by_parent = models.Item.objects.prefetch_related(
+        'parent_type').prefetch_related('item_type').filter(parent_type__slug=str(slug))
+    
     serialized_data = serializers.ItemSerializer(all_by_parent, many=True).data
 
     return Response(
-        dict(
-            message='Data collected by parent slug',
-            data=serialized_data
-            )
-        )
+        dict(message='Data collected by parent slug',
+            data=serialized_data ))
+
+@api_view()
+def getAllByType(request, p_slug, t_slug):
+    """
+    Get all elements by parent and type slug. URI Example: /api/men/shirt/all
+    """
+
+    ts = AllTypeSlugs()
+    ps = AllParentSlugs()
+
+    type_slugs = asdict(ts)
+    parent_slugs = asdict(ps)
+
+    if p_slug not in parent_slugs.values() or t_slug not in type_slugs.values():
+        return Response(
+            {'message': f"Resource not found. Use one of: {type_slugs.values()}"}, 
+            status=status.HTTP_404_NOT_FOUND )
+
+    all_by_type = models.Item.objects.prefetch_related(
+        'parent_type').prefetch_related('item_type').filter(
+            parent_type__slug=str(p_slug), item_type__slug=str(t_slug))
+    
+    serialized_data = serializers.ItemSerializer(all_by_type, many=True).data
+
+    return Response(
+        dict(message='Data collected by parent and type slug',
+            data=serialized_data ))
 
 
+# @api_view()
+# def getItemBySlug(request, p_slug, t_slug, slug):
+#     """Get Item by slug"""
 
+#     item = models.Item.objects.prefetch_related(
+#         'parent_type').prefetch_related('item_type').get(
+#             slug=str(slug))
+    
+#     serialized_data = serializers.ItemSerializer(item, many=False).data
+    
+#     return Response(
+#         dict(message='Item by concrete slug is returned',
+#             data=serialized_data ))
+
+
+class ItemBySlug(APIView):
+    """Class for creating or getting item"""
+
+    items_serializer = serializers.ItemSerializer
+
+    def get(self, request, slug):
+        item = models.Item.objects.prefetch_related(
+            'parent_type').prefetch_related('item_type').get(
+            slug=str(slug))
+
+        serialized_data = self.items_serializer(item, many=False).data
+
+        return Response(
+            dict(message='Item by concrete slug is returned',
+                data=serialized_data))
+    
+    def post(self, request, slug):
+        print(request.data)
+
+        serialized_data = self.items_serializer(data=request.data)
+
+        if serialized_data.is_valid():
+            serialized_data.save()
+            return Response(serialized_data.data, status=status.HTTP_201_CREATED)
+        return Response(serialized_data.data, status=status.HTTP_400_BAD_REQUEST)
+        

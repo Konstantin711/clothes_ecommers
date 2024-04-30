@@ -6,5 +6,7 @@ admin.site.register(
         ItemType,
         ParentType,
         Item,
+        ItemSizes,
+        ItemColors,
     ]
 )

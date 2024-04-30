@@ -80,9 +80,9 @@ def getAllByType(request, p_slug, t_slug):
             {'message': f"Resource not found. Use one of: {type_slugs.values()}"},
             status=status.HTTP_404_NOT_FOUND)
 
-    all_by_type = models.Item.objects.prefetch_related(
-        'parent_type').prefetch_related('item_type').filter(
-            parent_type__slug=str(p_slug), item_type__slug=str(t_slug))
+    all_by_type = models.Item.objects.filter(
+            parent_type__slug=str(p_slug), item_type__slug=str(t_slug)
+            )
 
     serialized_data = serializers.ItemSerializer(all_by_type, many=True).data
 
@@ -95,19 +95,18 @@ def getAllByType(request, p_slug, t_slug):
 def getItemBySlug(request, slug):
     """Get Item by slug"""
 
-    item = models.Item.objects.prefetch_related(
-        'parent_type').prefetch_related('item_type').get(
-            slug=str(slug))
+    item = models.Item.objects.get(slug=str(slug))
 
     serialized_data = serializers.ItemSerializer(item, many=False).data
 
     return Response(
         dict(message='Item by concrete slug is returned',
-            data=serialized_data ))
+             data=serialized_data))
 
 @api_view(["POST"])
 def addNewItem(request):
     """Create a new Item"""
+    print(request.data)
      
     serialized_data = serializers.ItemSerializer(data=request.data)
      

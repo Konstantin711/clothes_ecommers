@@ -1,30 +1,46 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-// import './mainheader.css'; 
+
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 function MainHeader() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light main-header">
-      <div className="container">
-        <Link className="navbar-brand" to="/">1310</Link>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav mx-auto">
-            <li className="nav-item"><Link className="nav-link" to="#">Каталог</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="#">Взуття</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="#">Одяг</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="#">Аксесуари</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="#">Бренди</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="#">Знижки</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="#">Блог</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="#">RU</Link></li>
-          </ul>
-          <div className="header-icons">
-            <i className="fas fa-shopping-cart"></i>
-            <i className="fas fa-search"></i>
+    <Navbar expand="lg" className="bg-body-tertiary">
+      <Container>
+        <Navbar.Brand href="#home">THIRTS SHOP</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <NavDropdown title="Футболки" id="basic-nav-dropdown" className="dark-dropdown-menu">
+              <div className="d-flex">
+                <div className="flex-fill">
+                  <NavDropdown.Item href="#action/3.1" className='men-tshirts'>Чоловічі футболки</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action/3.1" className='menu-item'>Базові</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2" className='menu-item'>Оверсайз</NavDropdown.Item>
+                </div>
+                <div className="flex-fill">
+                  <NavDropdown.Item href="#action/3.1" className='men-tshirts'>Жіночі футболки</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action/3.1" className='menu-item'>Базові</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2" className='menu-item'>Оверсайз</NavDropdown.Item>
+                </div>
+              </div>
+            </NavDropdown>
+          </Nav>
+          <div>
+            <i className="bi bi-cart"></i>
           </div>
-        </div>
-      </div>
-    </nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 

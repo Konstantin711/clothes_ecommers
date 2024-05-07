@@ -2,10 +2,43 @@ from dataclasses import dataclass, fields, asdict
 from . import models
 from . import serializers
 
+from django.contrib.auth.hashers import make_password
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        serializer = serializers.UserSerializerWithToken(self.user).data
+        for k, v in serializer.items():
+            data[k] = v
+
+        return data
+    
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+
+# @api_view(['POST'])
+# def registerUser(request):
+#     data = request.data
+
+#     new_user = models.UserProfile.objects.create(
+#         email = data['email'],
+#         username = data['name'],
+#         password = make_password(data['password'])
+#     )
+#     serializer = serializers.UserSerializerWithToken(new_user, many=False)
+#     return Response(serializer.data)
+
 
 # pathes:
 # - men(all)
@@ -53,8 +86,7 @@ def getAllByParent(request, slug):
             status=status.HTTP_404_NOT_FOUND
         )
 
-    all_by_parent = models.Item.objects.prefetch_related(
-        'parent_type').prefetch_related('item_type').filter(parent_type__slug=str(slug))
+    all_by_parent = models.Item.objects.filter(parent_type__slug=str(slug))
 
     serialized_data = serializers.ItemSerializer(all_by_parent, many=True).data
 
@@ -106,7 +138,6 @@ def getItemBySlug(request, slug):
 @api_view(["POST"])
 def addNewItem(request):
     """Create a new Item"""
-    print(request.data)
      
     serialized_data = serializers.ItemSerializer(data=request.data)
      

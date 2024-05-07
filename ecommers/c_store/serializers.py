@@ -1,5 +1,44 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from .models import *
+
+
+# USER SERIALIZER START
+
+class UserSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField(read_only=True)
+    _id = serializers.SerializerMethodField(read_only=True)
+    isAdmin = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = UserProfile
+        fields = ['email', 'name', 'is_active', 'is_staff', 'objects']
+
+    def get__id(self, obj):
+        return obj.id
+    
+    def get_isAdmin(self, obj):
+        return obj.is_staff
+    
+    def get_name(self, obj):
+        name = obj.name
+        if name =='':
+            name = obj.email
+        
+        return name
+
+
+class UserSerializerWithToken(UserSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ['email', 'name', 'is_active', 'is_staff', 'objects']
+
+    def get_token(self, obj):
+        token = RefreshToken.for_user(obj)
+        return str(token.access_token)
+
+# USER SERIALIZER END
 
 
 class ItemTypeSerializer(serializers.ModelSerializer):
@@ -53,7 +92,8 @@ class ItemSerializer(serializers.ModelSerializer):
             'parent_type', 
             'item_type', 
             'item_sizes', 
-            'item_colors']
+            'item_colors'
+            ]
 
     def create(self, validated_data):
         parent_type_data = validated_data.pop('parent_type')

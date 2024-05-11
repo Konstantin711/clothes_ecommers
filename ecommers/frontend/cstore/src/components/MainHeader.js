@@ -21,13 +21,13 @@ function MainHeader() {
             <NavDropdown title="Футболки" id="basic-nav-dropdown" className="dark-dropdown-menu">
               <div className="d-flex">
                 <div className="flex-fill">
-                  <NavDropdown.Item href="#action/3.1" className='men-tshirts'>Чоловічі футболки</NavDropdown.Item>
+                  <NavDropdown.Item href="/catalog/men/all" className='men-tshirts'>Чоловічі футболки</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="#action/3.1" className='menu-item'>Базові</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2" className='menu-item'>Оверсайз</NavDropdown.Item>
                 </div>
                 <div className="flex-fill">
-                  <NavDropdown.Item href="#action/3.1" className='men-tshirts'>Жіночі футболки</NavDropdown.Item>
+                  <NavDropdown.Item href="/catalog/women/all" className='men-tshirts'>Жіночі футболки</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="#action/3.1" className='menu-item'>Базові</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2" className='menu-item'>Оверсайз</NavDropdown.Item>

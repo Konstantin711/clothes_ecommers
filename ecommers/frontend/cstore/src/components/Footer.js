@@ -8,7 +8,8 @@ function Footer() {
     <>
       <footer className="text-light text-center footer">
         <Row>
-          <Col className='footer-logo'>
+          <Col lg={2} xl={2}></Col>
+          <Col sm={12} md={12} lg={2} xl={2} className='footer-logo'>
             <h3>T-SHIRTS STORE</h3>
             <p className='footer-sell-text'>
               Здійсніть замовлення на суму від 1000 грн. <br />При оформленні замовлення введіть промокод “t-shirt” та отримайте
@@ -16,7 +17,7 @@ function Footer() {
             </p>
           </Col>
         
-          <Col> 
+          <Col sm={12} md={12} lg={2} xl={2}> 
             <p>СТОРІНКИ</p>
 
             <Link to={'#'} >Оплата й доставка</Link>
@@ -25,12 +26,18 @@ function Footer() {
             <br/>
             <Link to={'#'}>Публічний договір</Link>
           </Col>
-          <Col>
+          <Col sm={12} md={12} lg={2} xl={2}>
             <p>КОНТАКТИ</p>
             <p>м. Одеса, Україна <br />
             050 888 88 88 <br />
             shirts-store@gmail.com</p>
           </Col>
+          <Col sm={12} md={12} lg={2} xl={2}>
+            <p>Соціальні мережі</p>
+            <p>Instagram</p>
+            <p>TikTok</p>
+          </Col>
+          <Col lg={2} xl={2}></Col>
         </Row>
       </footer>
       <footer className="text-light text-center small-footer">

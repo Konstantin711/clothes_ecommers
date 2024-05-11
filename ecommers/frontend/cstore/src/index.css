@@ -227,3 +227,65 @@ a.th-link {
 }
 
 /* FOOTER */
+/* SIDEBAR */
+.sidebar-text{
+  font-family: Roboto, sans-serif;
+  color: #91c0c0;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1em;
+
+  margin-top: 30px;
+}
+
+.sidebar-price{
+  font-family: Roboto, sans-serif;
+  color: #91c0c0;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.slider-block{
+  margin-left: 15px;
+}
+
+.category-checkboxes, .price-text{
+  font-family: Roboto, sans-serif;
+  color: rgb(68 68 68);
+  font-style: normal;
+  font-weight: 300;
+  font-size: 0.85em;
+}
+
+.sizes-button{
+  margin-right: 5px;
+  margin-top: 5px;
+  border-radius: 0%;
+}
+
+.sizes-button:checked{
+  color: #11aa0c;
+}
+
+/* SIDEBAR */
+
+/* BUY BUTTON */
+
+.buy-button{
+  background-color: transparent !important;
+  color: #91c0c0 !important;
+  width: 90px; height: 30px;
+  border-radius: 0% !important;
+  border: 2px solid #91c0c0 !important;
+  --bs-btn-padding-x: none !important;
+}
+
+.buy-button:hover{
+  background-color: #91c0c0 !important;
+  color: #ffffff !important;
+  border-radius: 0% !important;
+  border: 2px solid #91c0c0 !important;
+}
+
+/* BUY BUTTON */

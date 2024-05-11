@@ -6,6 +6,8 @@ import Footer from './components/Footer';
 import HomePage from './screens/HomePage';
 import AboutPage from './screens/AboutUs';
 import ContactPage from './screens/DeliveryPayment';
+import CatalogPage from './screens/CatalogPage'
+import ItemPage from './screens/ItemPage'
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
       <MainHeader />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path='/catalog/:slug/all' element={<CatalogPage />} />
+        <Route path='/catalog/:slug' element={<ItemPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>

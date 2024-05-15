@@ -289,3 +289,46 @@ a.th-link {
 }
 
 /* BUY BUTTON */
+
+/* SINGLE ITEM PAGE */
+.item-title{
+  font-size: 26px;
+  font-family: Ubuntu, sans-serif;
+}
+
+.description-title{
+  font-size: 16px;
+  font-family: Ubuntu, sans-serif;
+  font-weight: 500;
+}
+
+.item-description{
+  font-family: "Roboto Flex", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 250;
+  font-style: normal;
+}
+
+.item-price-block{
+  font-size: 26px;
+  margin-top: 10px;
+  font-family: Ubuntu, sans-serif;
+  font-weight: 500;
+  display: block;
+}
+
+.item-price{
+  font-size: 22px;
+  font-family: Ubuntu, sans-serif;
+  font-weight: 400;
+  float: right;
+  margin-right: 9%;
+  margin-top: 6px;
+}
+
+.buy-block{
+  margin-right: 9%;
+}
+
+/* SINGLE ITEM PAGE */
+
